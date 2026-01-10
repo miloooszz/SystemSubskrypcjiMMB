@@ -1,0 +1,28 @@
+﻿@model SystemSubskrypcjiMMB.Models.SubskrypcjaMMB
+
+<h2>Dodaj Subskrypcję</h2>
+
+<form asp-action="Create" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="form-group mb-3">
+        <label asp-for="Nazwa" class="form-label"></label>
+        <input asp-for="Nazwa" class="form-control" />
+        <span asp-validation-for="Nazwa" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mb-3">
+        <label asp-for="Cena" class="form-label"></label>
+        <input asp-for="Cena" class="form-control" />
+        <span asp-validation-for="Cena" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mb-3">
+        <label asp-for="DataRozpoczecia" class="form-label"></label>
+        <input asp-for="DataRozpoczecia" class="form-control" type="date" />
+        <span asp-validation-for="DataRozpoczecia" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-success">➕ Dodaj</button>
+    <a asp-action="Index" class="btn btn-secondary">Anuluj</a>
+</form>

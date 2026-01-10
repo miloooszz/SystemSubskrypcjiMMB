@@ -1,0 +1,18 @@
+﻿@model SystemSubskrypcjiMMB.Models.SubskrypcjaMMB
+@{
+    ViewData["Title"] = "Usuń subskrypcję";
+}
+
+<h1>🗑️ Usuń @Model.Nazwa</h1>
+<div class="alert alert-danger">
+    <h4>Potwierdź usunięcie:</h4>
+    <p><strong>@Model.Nazwa</strong> | @Model.Cena.ToString("C") | od @Model.DataRozpoczecia.ToShortDateString()</p>
+</div>
+
+<form asp-action="Delete" method="post">
+    <input asp-for="Id" type="hidden" />
+    <div class="d-flex gap-2">
+        <input type="submit" value="🗑️ Usuń na zawsze" class="btn btn-danger" onclick="return confirm('Na pewno?')" />
+        <a asp-action="Index" class="btn btn-secondary">← Anuluj</a>
+    </div>
+</form>

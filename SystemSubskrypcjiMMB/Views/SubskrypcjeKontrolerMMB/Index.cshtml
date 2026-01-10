@@ -1,0 +1,127 @@
+﻿@model IEnumerable<SystemSubskrypcjiMMB.Models.SubskrypcjaMMB>
+
+@{
+    ViewData["Title"] = "Moje subskrypcje";
+}
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h5>🔍 Filtrowanie i sortowanie</h5>
+    </div>
+    <div class="card-body">
+        <form asp-action="Index" method="get" class="row g-3">
+            <div class="col-md-4">
+                <label class="form-label">Szukaj nazwy:</label>
+                <input name="search" value="@ViewBag.Search" class="form-control"
+                       placeholder="Wpisz Netflix, Spotify..." />
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">Kategoria:</label>
+                <select name="kategoriaId" class="form-select">
+                    <option value="">Wszystkie kategorie</option>
+                </select>
+            </div>
+            <div class="col-md-2 d-flex align-items-end">
+                <button type="submit" class="btn btn-primary w-100 mb-3">
+                    <i class="bi bi-search"></i> Filtruj
+                </button>
+            </div>
+            <div class="col-md-3 d-flex align-items-end">
+                <a asp-action="DaneTestowe" class="btn btn-warning w-100 mb-3">
+                    🧪 Dane testowe
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- POPRAWIONE KARTY STATYSTYK - BEZ BŁĘDÓW nullable -->
+@if (Model.Any())
+{
+    <div class="row mb-4 g-3">
+        <div class="col-md-3">
+            <div class="card bg-primary text-white text-center">
+                <div class="card-body">
+                    <h3 class="display-6">@Model.Count()</h3>
+                    <p class="mb-0 fw-bold">subskrypcji</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-success text-white text-center">
+                <div class="card-body">
+                    <h3 class="display-6">@Model.Sum(s => s.Cena).ToString("C")</h3>
+                    <p class="mb-0 fw-bold">suma wydatków</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-info text-white text-center">
+                <div class="card-body">
+                    @{
+                        var srednia = Model.Any() ? Model.Average(s => (double)s.Cena) : 0.0;
+                    }
+                    <h3 class="display-6">@srednia.ToString("C")</h3>
+                    <p class="mb-0 fw-bold">średnia cena</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-warning text-dark text-center">
+                <div class="card-body">
+                    <h3 class="display-6">@Model.Max(s => s.Cena).ToString("C")</h3>
+                    <p class="mb-0 fw-bold">najdroższa</p>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<h1>Moje Subskrypcje</h1>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">
+        <h4>ℹ️ Informacja</h4>
+        <p>Nie masz jeszcze żadnych subskrypcji. <a asp-action="Create">Dodaj pierwszą!</a></p>
+    </div>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table table-striped table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th>Nazwa</th>
+                    <th>Cena</th>
+                    <th>Rozpoczęcie</th>
+                    <th>Kategoria</th>
+                    <th>Akcje</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td><strong>@item.Nazwa</strong></td>
+                        <td><span class="badge bg-success fs-6">@item.Cena.ToString("C")</span></td>
+                        <td>@item.DataRozpoczecia.ToString("dd.MM.yyyy")</td>
+                        <td>@(item.Kategoria?.Nazwa ?? "—")</td>
+                        <td>
+                            <div class="btn-group btn-group-sm" role="group">
+                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-primary">✏️</a>
+                                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger">🗑️</a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+<div class="mt-4">
+    <a asp-action="Create" class="btn btn-success btn-lg">
+        ➕ <i>Dodaj nową subskrypcję</i>
+    </a>
+</div>
