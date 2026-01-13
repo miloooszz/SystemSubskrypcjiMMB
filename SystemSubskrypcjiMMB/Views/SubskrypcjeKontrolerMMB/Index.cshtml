@@ -6,7 +6,7 @@
 
 <div class="card mb-4">
     <div class="card-header">
-        <h5>🔍 Filtrowanie i sortowanie</h5>
+        <h5>Filtrowanie i sortowanie</h5>
     </div>
     <div class="card-body">
         <form asp-action="Index" method="get" class="row g-3">
@@ -28,7 +28,7 @@
             </div>
             <div class="col-md-3 d-flex align-items-end">
                 <a asp-action="DaneTestowe" class="btn btn-warning w-100 mb-3">
-                    🧪 Dane testowe
+                     Dane testowe
                 </a>
             </div>
         </form>
@@ -82,7 +82,7 @@
 @if (!Model.Any())
 {
     <div class="alert alert-info">
-        <h4>ℹ️ Informacja</h4>
+        <h4>Informacja</h4>
         <p>Nie masz jeszcze żadnych subskrypcji. <a asp-action="Create">Dodaj pierwszą!</a></p>
     </div>
 }
@@ -122,6 +122,6 @@ else
 
 <div class="mt-4">
     <a asp-action="Create" class="btn btn-success btn-lg">
-        ➕ <i>Dodaj nową subskrypcję</i>
+        <i>Dodaj nową subskrypcję</i>
     </a>
 </div>
